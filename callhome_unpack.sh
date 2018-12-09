@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for f in `find . -maxdepth 1 -type f` ; do 
+for f in `find . -maxdepth 1 -type f` ; do
     #echo parsing $f
     if [[ "$f" =~ ([A-Za-z0-9_]*)-([A-Za-z0-9_-]*)-[a-f0-9]{8}-.*-([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2}).*\.tar$ ]] ; then
         echo exteact nodes file $f to $dir ...
@@ -12,8 +12,8 @@ for f in `find . -maxdepth 1 -type f` ; do
         hour=${BASH_REMATCH[6]}
         minute=${BASH_REMATCH[7]}
         second=${BASH_REMATCH[8]}
-        #echo found $customer, $cluster, $year, $month, $day, $hour, $minute, $second
-        dir="$customer/$cluster/$year$month$day_$hour$minite$second/"
+        dir="$customer/$cluster/$year$month${day}_$hour$minute$second/"
+        #echo found $customer, $cluster, $year, $month, $day, $hour, $minute, $second, $dir
         mkdir -p $dir
         tar xf $f -C $dir
         cd $dir
@@ -38,8 +38,8 @@ for f in `find . -maxdepth 1 -type f` ; do
         hour=${BASH_REMATCH[6]}
         minute=${BASH_REMATCH[7]}
         second=${BASH_REMATCH[8]}
-        #echo found $customer, $cluster, $year, $month, $day, $hour, $minute, $second
-        dir="$customer/$cluster/$year$month$day_$hour$minite$second/"
+        dir="$customer/$cluster/$year$month${day}_$hour$minute$second/"
+        #echo found $customer, $cluster, $year, $month, $day, $hour, $minute, $second, $dir
         mkdir -p $dir
         echo extract vms file $f to directory ${dir}vms ...
         tar -xf $f --use-compress-program `which unzstd` -C $dir
